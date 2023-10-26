@@ -9,12 +9,34 @@
 
     <body>
       <nav>
-            <h1>Bankside Rakaia Motorkhana Mavens - Competition event</h1>
+            <h1 class="mb-4 mt-4">Bankside Rakaia Motorkhana Mavens - Competition event</h1>
+                <p>Welcome to Bankside Rakaia Motorkhana Mavens - Competition event</p>
+                <a href="{{ url_for('admin_home') }}" class="btn btn-secondary mb-2">Admin Home</a>
+
             <ul>
-                <li><a href="{{ url_for('listdrivers') }}">List Drivers</a></li>
-                <li><a href="{{ url_for('listcourses') }}">List Courses</a></li>
+                <li class="mb-2"><a href="/">Home Page</a></li>
+                <li class="mb-2"><a href="{{ url_for('listdrivers') }}">List of Drivers</a></li>
+                <li class="mb-2"><a href="{{ url_for('listcourses') }}">List of Courses</a></li>
+                <li class="mb-2"><a href="{{ url_for('driverdetails') }}">Driver's Run Details</a></li>
+                <li class="mb-2"><a href="{{ url_for('overallresult') }}">Overall Results Report</a></li>
+                <li class="mb-2"><a href="{{ url_for('showgraph') }}"> Top 5 Overall Results Bar graph</a></li>
             </ul>
           </nav>
+
+          <table class="text-center" width="100%" height="100%">
+            {% if request.path == '/' %}
+            <tr>
+                <td><img src="{{ url_for('static', filename='flag.jpg') }}"></td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Image source: <a href="https://www.vecteezy.com/vector-art/27881009-racing-flag-icon-vector-checkered-flag-icon-finishing-flags">Vecteezy</a></span>
+                </td>
+            </tr>
+            {% endif %}
+        </table>
+          
+
           <section class="content">
             <header>
               {% block header %}{% endblock %}
