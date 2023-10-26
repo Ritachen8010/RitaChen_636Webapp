@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-center mt-5">Driver's Run Details</h2>
+<h3 class="text-center mt-3">Select a Driver:</h3>
+
+<form class="text-center mt-3" action="/driverdetails" method="post">
+    <select name="driver_name" class="mx-auto">
+        {% for name in driver_names %}
+            {% if name == driver_name %}
+                <option value="{{ name }}" selected>{{ name }}</option>
+            {% else %}
+                <option value="{{ name }}">{{ name }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <input type="submit" value="Show Details" class="btn btn-primary">
+</form>
+
+{% if driver %}
+<h3 class="text-center mt-5">Driver Details:</h3>
+<table class="text-center mt-5 mx-auto w-50 table table-bordered">
+    <thead>
+        <tr>
+            <th>Driver ID</th>
+            <th>Name</th>
+            <th>Car Model</th>
+            <th>Drive Class</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ driver[0] }}</td>
+            <td>{{ driver[1] }}</td>
+            <td>{{ driver[2] }}</td>
+            <td>{{ driver[3] }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 class="text-center mt-5">Runs Details:</h3>
+<table class="text-center mt-5 mx-auto w-50 table table-bordered">
+    <thead>
+        <tr>
+            <th>Run Number</th>
+            <th>Course Name</th>
+            <th>WD(Wrong Direction)</th>
+            <th>Cones</th>
+            <th>Run Time(Seconds)</th>
+            <th>Run Total(Seconds)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for run in runs %}
+        <tr>
+            <td>{{ run[1] }}</td>
+            <td>{{ run[0] }}</td>
+            <td>
+                {% if run[2] != 0 %}
+                {{ run[2] }} 
+            {% endif %}</td>
+            <td>
+                {% if run[3] is not none and run[3] != 0 %}
+                    {{ run[3] }} 
+            {% endif %}</td>
+            <td>
+                {% if run[4] is not none %}
+                {{ run[4] }} 
+            {% else %}
+                0
+            {% endif %}
+            </td>
+            <td>
+                {% set wd = run[2] or 0 %}
+                {% set cones = run[3] or 0 %}
+                {% set run_time = run[4] or 0 %}
+                {% set run_total = run_time + (wd * 10) + (cones * 5) %}
+                {{ run_total }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock %}
+
+
