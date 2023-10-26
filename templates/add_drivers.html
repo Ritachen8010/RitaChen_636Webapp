@@ -1,0 +1,92 @@
+{% extends "admin.html" %}
+{% block content %}
+
+
+{% if errors %}
+<div class="alert alert-danger">
+    <ul>
+        {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if success %}
+<div class="alert alert-success">
+    {{ success }}
+</div>
+{% endif %}
+
+
+<h2 class="text-center mt-5">Add Drivers</h2>
+
+<form action="/adddrivers" method="post">
+    <table class="mx-auto w-50 table table-bordered">
+        <tr>
+            <td class="text-center"><label for="first_name">First Name:</label></td>
+            <td class="text-center"><input type="text" name="first_name" required></td>
+        </tr>
+
+        <tr>
+            <td class="text-center"><label for="surname">Last Name:</label></td>
+            <td class="text-center"><input type="text" name="surname" required></td>
+        </tr>
+
+        <tr>
+            <td class="text-center"><label for="car_data">Select a Car Info:</label></td>
+            <td class="text-center">
+                <select name="car_data" required>
+                    <option value="">--Select a Car Info--</option>
+                    {% for car in car_data %}
+                        <option value="{{ car[0] }} - {{ car[1] }} - {{ car[2] }}" {% if car[0] ~ ' - ' ~ car[1] ~ ' - ' ~ car[2] == selected_car %}selected{% endif %}>
+                            {{ car[0] }} - {{ car[1] }} - {{ car[2] }}</option>
+                    {% endfor %}
+                </select>                
+            </td>            
+        </tr>
+
+        <tr>
+            <td class="text-center"><label for="is_junior">Junior Driver:</label></td>
+            <td class="text-center"><input type="checkbox" name="is_junior" id="is_junior"></td>
+        </tr>
+        <tr>
+            <td class="text-center" colspan="2">
+                <small>Note: Drivers aged 12 to 25 are Juniors.</small>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center"><label for="dob">Date of Birth:</label></td>
+            <td class="text-center"><input type="date" name="dob" id="dob"></td>
+        </tr>
+        <tr>
+            <td class="text-center" colspan="2">
+                <small>Note: If the driver is a Junior, please fill in the DOB.</small>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="text-center"><label for="caregiver_id">Select a Caregiver:</label></td>
+            <td class="text-center">
+                <select name="caregiver_id">
+                    <option value="">--Select a Caregiver--</option>
+                    {% for caregiver in caregiver_data %}
+                        <option value="{{ caregiver[0] }}" {% if caregiver[0] == caregiver_id %}selected{% endif %}>
+                            {{ caregiver[1] }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center" colspan="2">
+                <small>Note: If age is 16 or younger, please fill in the Caregiver.</small>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="text-center"><input type="submit" value="Add Driver" class="btn btn-primary"></td>
+        </tr>
+    </table>
+</form>
+
+{% endblock %}
