@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- driver_list is the variable passed in containing the list of drivers -->
+<!-- Add code to display a list of drivers -->
+
+<h2 class="text-center mt-5">List of Drivers</h2>
+
+<table class="text-center mt-5 mx-auto w-50 table table-bordered">
+    <thead>
+        <tr>
+            <th>Driver ID</th>
+            <th>Driver Name</th>
+            <th>Date of Birth(YYYY-MM-DD)</th>
+            <th>Age</th>
+            <th>Caregiver</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for driver in driver_List %}
+        {% set junior = driver[4] is not none and driver[4] >= 12 and driver[4] <= 25 %}
+        <tr class="{{ 'table-warning' if junior else 'table-default' }}">
+            <td>{{ driver[0] }}</td>
+            <td>
+                <a href="{{ url_for('driverdetails_by_click_name', driver_name=driver[2] + ' ' + driver[1]) }}">
+                {{ driver[2] }}, {{ driver[1] }}</a>
+            </td>
+            <td>
+                {% if driver[3] is not none%}
+                {{ driver[3]}}
+            {% else %}
+                N/A
+            {% endif %}
+            </td>
+            <td>
+                {% if driver[4] is not none%}
+                {{ driver[4]}}
+            {% else %}
+                N/A
+            {% endif %}
+            </td>
+            <td>
+                {% if driver[5] is not none %}
+                {{ driver[6] }}, {{ driver[5] }}
+            {% else %}
+                N/A
+            {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody> 
+
+{% endblock %}
