@@ -1,0 +1,103 @@
+{% extends "admin.html" %}
+{% block content %}
+
+{% if errors %}
+<div class="alert alert-danger">
+    <ul>
+        {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if success %}
+<div class="alert alert-success">
+    {{ success }}
+</div>
+{% endif %}
+
+
+<h2 class="text-center">Edit Runs</h2>
+
+
+<form action="/editruns" method="post">
+    <table class="text-center mt-5 mx-auto w-50 table table-bordered">
+
+        <!-- Row for selecting driver -->
+        <tr>
+            <td><label for="driver_id_name">Select a Driver:</label></td>
+            <td>
+                <select name="driver_id_name" required>
+                    <option value="">--Select a Driver--</option>
+                    {% for driver in driver_id_names %}
+                        <option value="{{ driver[0] }} - {{ driver[1] }}" {% if driver[0] ~ ' - ' ~ driver[1] == selected_driver %}selected{% endif %}>
+                            {{ driver[0] }} - {{ driver[1] }}</option>
+                    {% endfor %}
+                </select>                
+            </td>
+        </tr>
+
+        <!-- Row for selecting course -->
+        <tr>
+            <td><label for="course_name">Select a Course:</label></td>
+            <td>
+                <select name="course_name" required>
+                    <option value="">--Select a Course--</option>
+                    {% for course in course_names %}
+                        {% if course[0] == selected_course %}
+                            <option value="{{ course[0] }}" selected>{{ course[1] }}</option>
+                        {% else %}
+                            <option value="{{ course[0] }}">{{ course[1] }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>          
+        
+        <!-- Row for selecting run number -->
+        <tr>
+            <td><label for="run_num">Select a Run Number:</label></td>
+            <td>
+                <select name="run_num" required>
+                    <option value="">--Select a Run Number--</option>
+                    <option value="1" {% if selected_run_num == '1' %}selected{% endif %}>1</option>
+                    <option value="2" {% if selected_run_num == '2' %}selected{% endif %}>2</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type="submit" name="fetch_details" value="Fetch Details" class="btn btn-primary"></td>
+        </tr>
+    </table>
+</form>
+
+{% if run_details %}
+<form action="/editruns" method="post">
+    <table class="text-center mt-5 mx-auto w-50 table table-bordered">
+        <input type="hidden" name="driver_id_name" value="{{ selected_driver }}">>
+        <input type="hidden" name="course_name" value="{{ selected_course }}">
+        <input type="hidden" name="run_num" value="{{ selected_run_num }}">
+        <tr>
+            <td><label for="time">Time:</label></td>
+            <td><input type="number" step="0.01" name="updated_time" value="{{ run_details[0] }}" min="0" max="500"></td>
+        </tr>
+        <tr>
+            <td><label for="cones">Cones:</label></td>
+            <td><input type="number" name="updated_cones" value="{{ run_details[1] }}" min="0" max="20" required></td>
+        </tr>
+        <tr>
+            <td><label for="wd">WD:</label></td>
+            <td><input type="checkbox" id="wd" name="updated_wd" value="1" {% if run_details[2] == 1 %} checked {% endif %}></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" name="update_runs" value="Update Runs" class="btn btn-primary"></td> 
+        </tr>
+    </table>
+        <p class="text-center">(*NOTE: Tick the box if Driver has WD)</p>
+</form>
+{% endif %}
+
+{% endblock %}
+
