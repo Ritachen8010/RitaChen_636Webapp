@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-center mt-5">List of Courses</h2>
+
+<!-- code to display list of courses-->
+<table class="text-center mt-5 mx-auto w-50 table table-bordered">
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Name</th>
+            <th>Map diagram</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for course in course_list %}
+            <tr>
+                <td>{{ course[0] }}</td>
+                <td>{{ course[1] }}</td>
+                <td><img src="{{ url_for('static', filename=course[2]) }}" width="400"></td>
+            </tr>
+        {% endfor %}
+    </tbody>  
+</table>
+{% endblock %}
