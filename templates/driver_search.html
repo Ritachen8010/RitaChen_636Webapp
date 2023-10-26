@@ -1,0 +1,70 @@
+{% extends "admin.html" %}
+{% block content %}
+
+<form class="text-center mt-3" action="/driversearch" method="post">
+    <label for="search_term">Search:</label>
+    <input type="text" name="search_term" id="search_term">
+    <input type="submit" value="Search" class="btn btn-primary">
+</form>
+
+
+{% if errors %}
+    <div class="alert alert-danger">
+        {% for error in errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+<table class="text-center mt-5 mx-auto w-100 table table-bordered">
+    <thead>
+        <tr>
+            <th>Driver ID</th>
+            <th>Name</th>
+            <th>Car Model</th>
+            <th>Driver Class</th>
+            <th>Run Number</th>
+            <th>Course Name</th>
+            <th>WD(Wrong Direction)</th>
+            <th>Cones</th>
+            <th>Run Time(Seconds)</th>
+            <th>Run Total(Seconds)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for results in results %}
+        <tr>
+            <td>{{ results[0] }}</td>    
+            <td>{{ results[1] }}</td>
+            <td>{{ results[2] }}</td>
+            <td>{{ results[3] }}</td>
+            <td>{{ results[5] }}</td>
+            <td>{{ results[4] }}</td>
+            <td>
+                {% if results[6] != 0 %}
+                {{ results[6] }} 
+            {% endif %}</td>
+            <td>
+                {% if results[7] is not none and results[7] != 0 %}
+                    {{ results[7] }} 
+            {% endif %}</td>
+            <td>
+                {% if results[8] is not none %}
+                {{ results[8] }} 
+            {% else %}
+                0
+            {% endif %}</td>
+            <td>
+                {% set wd = results[6] or 0 %}
+                {% set cones = results[7] or 0 %}
+                {% set run_time = results[8] or 0 %}
+                {% set run_total = run_time + (wd * 10) + (cones * 5) %}
+                {{ run_total }}
+            </td>                 
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
