@@ -6,6 +6,7 @@ Student Name:Yingyue(Rita) Chen
 
 Student ID: 1126418
 
+
 Web application structure:
 
 1. "/" 
