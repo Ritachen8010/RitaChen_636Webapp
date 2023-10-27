@@ -3,7 +3,7 @@
 - Student Name:Yingyue(Rita) Chen
 - Student ID: 1126418
 
-- Web application structure:
+## Web application structure:
 1. "/" 
     - Function home() is def as HomePage， and renders the template name 'base.html'. The Homepage is a public interface. 
     - 'base.html' contains basic navigation to link to the different functions. 
@@ -69,40 +69,40 @@
     - If successful it adds 12 runs empty runs for the driver and updates to SQL as well. 
     - If an error should be sent an error to the user and refresh to the web. 
 
--   Assumptions and design decisions:
-    -   Assumptions:
-        1. The Caregiver can only selected with NULL BOD and Age.
-        2. NULL BOD and Age are define as a adult.
-        3. Overall result gives the best time in each course and plus 6 courses best time = overall result.
-        4. Not sure about the Driver's Run Details what should be displayed on the table, therefore I assume to just display everything except the Course ID letter.  
+## Assumptions and design decisions:
+-   Assumptions:
+1. The Caregiver can only selected with NULL BOD and Age.
+2. NULL BOD and Age are define as a adult.
+3. Overall result gives the best time in each course and plus 6 courses best time = overall result.
+4. Not sure about the Driver's Run Details what should be displayed on the table, therefore I assume to just display everything except the Course ID letter.  
 
-    -   Design decision:
-        1. Templating consistency: As the requirement is to develop two different interfaces, therefore base.html and admin.html are the main templates for the rest of the functional page. eg: Public templates only extend base.html, and Admin templates only extend admin.html, which simply creates consistent navigation for and information to each page. 
-        2. Edit Runs: I was thinking of putting in one route and one template, therefore in order to achieve this I designed two steps, one is for fetching driver details based on Driver ID, Name, Course Name and Run Number then based on the previous fetch to get the details of the specific runs to edit the run. The reason for using 'POST' is because it is designed for submitting data to the server, leading to a change in server state. 
-        3. Add Drivers: I have not figured out why should set up many templates...？ My first thought of this one is to give more restrictions to the user, eg: if the user ticks the junior should show the BOD and if BOD is less than 16 give caregiver selection. However, to achieve this it may require a Javascript for help...Therefore, what I was doing was to give all selections for the user, and make restrict for them. eg, If the user ticks Junior but does not fill in the BOD it gives you an error message, but it will come a bit repeat what the user did before because when fill the wrong message it refresh the web and need to re-fill the information again. 
-        4. Driver Search: I have designed to show a whole driver rather than only show the search bar, therefore when the user enters the search it gives a bit idea of search interface would look like and how it works. 
-        5. Driver Run Details: I have designed to show a table for driver details then run details, two separate tables make more easier to read.
+-   Design decision:
+1. Templating consistency: As the requirement is to develop two different interfaces, therefore base.html and admin.html are the main templates for the rest of the functional page. eg: Public templates only extend base.html, and Admin templates only extend admin.html, which simply creates consistent navigation for and information to each page. 
+2. Edit Runs: I was thinking of putting in one route and one template, therefore in order to achieve this I designed two steps, one is for fetching driver details based on Driver ID, Name, Course Name and Run Number then based on the previous fetch to get the details of the specific runs to edit the run. The reason for using 'POST' is because it is designed for submitting data to the server, leading to a change in server state. 
+3. Add Drivers: I have not figured out why should set up many templates...？ My first thought of this one is to give more restrictions to the user, eg: if the user ticks the junior should show the BOD and if BOD is less than 16 give caregiver selection. However, to achieve this it may require a Javascript for help...Therefore, what I was doing was to give all selections for the user, and make restrict for them. eg, If the user ticks Junior but does not fill in the BOD it gives you an error message, but it will come a bit repeat what the user did before because when fill the wrong message it refresh the web and need to re-fill the information again. 
+4. Driver Search: I have designed to show a whole driver rather than only show the search bar, therefore when the user enters the search it gives a bit idea of search interface would look like and how it works. 
+5. Driver Run Details: I have designed to show a table for driver details then run details, two separate tables make more easier to read.
 
--   Database questions: Refer to the supplied motorkhana_local.sql file to answer the following questions:
-    -   What SQL statement creates the car table and defines its three fields/columns? (Copy and paste the relevant lines of SQL.)
-        -   (
-            car_num INT PRIMARY KEY NOT NULL,
-            model VARCHAR(20) NOT NULL,
-            drive_class VARCHAR(3) NOT NULL
-            );
-    -   Which line of SQL code sets up the relationship between the car and driver tables?
-        -   FOREIGN KEY (car) REFERENCES car(car_num)
-    -   Which 3 lines of SQL code insert the Mini and GR Yaris details into the car table?
-        -   INSERT INTO car VALUES
-            (11,'Mini','FWD'),
-            (17,'GR Yaris','4WD'),
-    -   Suppose the club wanted to set a default value of ‘RWD’ for the driver_class field. What specific change would you need to make to the SQL to do this? (Do not implement this change in your app.)
-        -   drive_class VARCHAR(3) NOT NULL DEFAULT 'RWD'
-    -    Suppose logins were implemented. Why is it important for drivers and the club admin to access different routes? As part of your answer, give two specific examples of problems that could occur if all of the web app facilities were available to everyone.
-        -   I think that is because: 
-            1. Interface Clear: If only one route, it will confuse the public user and admin when they access the web. 
-            2. Data Protection and Privacy: The admin route might be exposed to the public and the driver has the right to access and make changes to the data (delete or add the data).
-            3. Easy to maintain in the future if separated into two routes. 
+## Database questions: Refer to the supplied motorkhana_local.sql file to answer the following questions:
+- What SQL statement creates the car table and defines its three fields/columns? (Copy and paste the relevant lines of SQL.)
+    -   (
+        car_num INT PRIMARY KEY NOT NULL,
+        model VARCHAR(20) NOT NULL,
+        drive_class VARCHAR(3) NOT NULL
+        );
+-   Which line of SQL code sets up the relationship between the car and driver tables?
+    -   FOREIGN KEY (car) REFERENCES car(car_num)
+-   Which 3 lines of SQL code insert the Mini and GR Yaris details into the car table?
+    -   INSERT INTO car VALUES
+        (11,'Mini','FWD'),
+        (17,'GR Yaris','4WD'),
+-   Suppose the club wanted to set a default value of ‘RWD’ for the driver_class field. What specific change would you need to make to the SQL to do this? (Do not implement this change in your app.)
+    -   drive_class VARCHAR(3) NOT NULL DEFAULT 'RWD'
+-    Suppose logins were implemented. Why is it important for drivers and the club admin to access different routes? As part of your answer, give two specific examples of problems that could occur if all of the web app facilities were available to everyone.
+    -   I think that is because: 
+        - Interface Clear: If only one route, it will confuse the public user and admin when they access the web. 
+        - Data Protection and Privacy: The admin route might be exposed to the public and the driver has the right to access and make changes to the data (delete or add the data).
+        - Easy to maintain in the future if separated into two routes. 
             
 - Image sources: 
 Vec, Y. (n.d). ***Racing flag icon vector . Checkered flag icon . Finishing Flags Pro Vector.*** https://www.vecteezy.com/vector-art/27881009-racing-flag-icon-vector-checkered-flag-icon-finishing-flags
