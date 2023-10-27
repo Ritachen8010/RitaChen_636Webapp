@@ -1,8 +1,9 @@
 # RitaChen_636
 - COMP636 Assignment 4 & 5
 - Student Name:Yingyue(Rita) Chen
-- Student ID: 1126418
-Web application structure:
+- Student ID: 
+
+- Web application structure:
 1. "/" 
     - Function home() is def as HomePage， and renders the template name 'base.html'. The Homepage is a public interface. 
     - 'base.html' contains basic navigation to link to the different functions. 
