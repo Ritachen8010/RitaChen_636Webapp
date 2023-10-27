@@ -121,7 +121,7 @@ def listcourses():
 def overallresult():
     connection = getCursor()
 
-    # Query to get all driver details along with course times
+    # Query to get all driver details with course times
     query = """
             SELECT
                 driver.driver_id,
@@ -166,9 +166,9 @@ def overallresult():
     for idx, driver in enumerate(overall_Result, start=1):
         driver_list = list(driver)
         if idx == 1:
-            driver_list.append('Cup')  # Add "Cup" to the end of the list
+            driver_list.append('Cup')  # Add "Cup" 
         elif 2 <= idx <= 5:
-            driver_list.append('Prize')  # Add "Prize" to the end of the list
+            driver_list.append('Prize')  # Add "Prize"
         else:
             driver_list.append('')  # Add an empty string to the end of the list, indicating no award
         results_with_awards.append(tuple(driver_list))
@@ -215,8 +215,8 @@ def showgraph():
     connection.execute(query)
     results = connection.fetchall()
 
-    # Extracting the top 5 drivers and their results
-    top5_results = results[:5]  # Taking the first 5 results since they are sorted by overall_time
+    # top 5 drivers and their results
+    top5_results = results[:5]  # sorted by overall_time
 
     bestDriverList = [f"{res[0]} {res[1]} " for res in top5_results]  
     resultsList = [res[8] for res in top5_results]
@@ -518,9 +518,9 @@ def adddrivers():
                 VALUES (%s, %s, %s, %s, %s, %s)
                 """
                 connection.execute(insert_driver_query, (first_name, surname, car_num, date_of_birth, age, caregiver_id))
-                driver_id = connection.lastrowid  # Get the ID of the newly inserted driver
+                driver_id = connection.lastrowid  # Get the ID of the driver
 
-                # Now, add 2 empty runs for the new driver, for each course
+                # Add 2 empty runs for the new driver, and each course
                 for course in courses:
                     course_id, course_name = course
                     for run_num in range(1, 3):  # Only two runs for each course
