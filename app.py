@@ -218,7 +218,7 @@ def showgraph():
     # Extracting the top 5 drivers and their results
     top5_results = results[:5]  # Taking the first 5 results since they are sorted by overall_time
 
-    bestDriverList = [f"{res[0]} {res[1]} " for res in top5_results]  # names with trailing space
+    bestDriverList = [f"{res[0]} {res[1]} " for res in top5_results]  
     resultsList = [res[8] for res in top5_results]
 
     return render_template("top5graph.html", name_list=bestDriverList, value_list=resultsList)
@@ -281,7 +281,7 @@ def driversearch():
     if not results and search_term:
         errors.append(f"No drivers found for the name '{search_term}'.")
 
-    return render_template('driver_search.html', results = results, errors=errors)
+    return render_template("driver_search.html", results = results, errors=errors)
 
 @app.route("/editruns", methods=["GET", "POST"])
 def editruns():
@@ -387,7 +387,7 @@ def editruns():
             success = "Run details updated successfully"
 
 
-    return render_template('edit_runs.html',
+    return render_template("edit_runs.html",
                            course_names=course_names,
                            driver_id_names=driver_id_names,
                            run_details=run_details,
@@ -535,7 +535,7 @@ def adddrivers():
                 errors.append(str(e))
                 print(f"Database error: {e}")
 
-    return render_template('add_drivers.html', errors=errors, success=success,
+    return render_template("add_drivers.html", errors=errors, success=success,
                            car_num=car_num, course_names=course_names,
                             car_data=car_data, car_model=car_model, drive_class=drive_class,
                             caregiver_data=caregiver_data)
